@@ -8,6 +8,14 @@ public class Card {
         this.value = value;
     }
 
+    public String rank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
     public String getSuit() {
         return suit;
     }
@@ -25,6 +33,6 @@ public class Card {
     }
 
     public String toString() {
-        return rank + " of " + suit;
+        return value + " of " + suit;
     }
 }

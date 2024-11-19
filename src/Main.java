@@ -2,7 +2,8 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        Card me = new Card(3, "Clubs");
+        Card me = new Card("clubs", 3);
+        System.out.println(me.toString());
 
     }
 }
