@@ -34,5 +34,7 @@ public class Player {
         hand.add(newCard);
     }
 
-    public String toString()
+    public String toString() {
+        return name + " has " + points + "\n" + name + "'s cards: " + hand;
+    }
 }

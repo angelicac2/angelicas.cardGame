@@ -4,6 +4,5 @@ public class Main {
     public static void main(String[] args) {
         Card me = new Card("clubs", 3);
         System.out.println(me.toString());
-
     }
 }
