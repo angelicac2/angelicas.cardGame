@@ -1,36 +1,40 @@
+import java.util.ArrayList;
+
 public class Player {
-    ArrayList<String> hand = new ArrayList<String>();
-    ArrayList<Integer> points = new ArrayList<Integer>();
+    private String name;
+    private ArrayList<Card> hand = new ArrayList<Card>();
+    private ArrayList<Card> card = new ArrayList<Card>();
+    private int points;
 
     public Player(String name) {
         points = 0;
     }
 
-    public Player(String name, ArrayList<String> hand) {
+    public Player(String name, ArrayList<Card> hand) {
         points = 0;
     }
 
-    public ArrayList<String> getHand() {
+    public ArrayList<Card> getHand() {
         return hand;
     }
 
-    public void setHand(ArrayList<String> hand) {
+    public void setHand(ArrayList<Card> hand) {
         this.hand = hand;
     }
 
-    public ArrayList<Integer> getPoints() {
+    public int getPoints() {
         return points;
     }
 
-    public void setPoints(ArrayList<Integer> points) {
+    public void setPoints(int points) {
         this.points = points;
     }
 
     public void addPoints(int valuePoints) {
-        points.add(valuePoints);
+        points += valuePoints;
     }
 
-    public void addCard(String newCard) {
+    public void addCard(Card newCard) {
         hand.add(newCard);
     }
 

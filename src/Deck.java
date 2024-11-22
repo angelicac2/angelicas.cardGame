@@ -6,9 +6,10 @@ public class Deck {
 
     public Deck(String[] rank, String[] suit, int[] pointValue) {
         cards = new ArrayList<Card>();
-        for (int count : suits) {
+        for (int count = 0; count < suit.length; count++) {
             for (int i = 0; i < rank.length; i++) {
-                Card cards = new Card(rank[i], suit, value[i]);
+                //fix this
+                Card cards = new Card(rank[i], suit[count], pointValue[i]);
             }
         }
         cardsLeft = cards.size();
@@ -36,10 +37,19 @@ public class Deck {
             return cards.get(cardsLeft);
         }
     }
-
+    //*
+    //have to finish random shuffle method
     public void shuffle() {
         cardsLeft = cards.size();
-        int r = (int) Math.random(cards.size());
+        int r = (int) (Math.random() * cards.size());
+        for (int i = 0; i < cards.size(); i++) {
+            //swap
+            int newPlace = r;
+            cards.set(i, cards.get(r));
+            cards.set(newPlace, cards.get(i));
+
+        }
         //finish this thing
     }
+    // */
 }
