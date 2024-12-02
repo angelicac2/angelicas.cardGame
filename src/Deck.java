@@ -37,19 +37,15 @@ public class Deck {
             return cards.get(cardsLeft);
         }
     }
-    //*
-    //have to finish random shuffle method
+
     public void shuffle() {
         cardsLeft = cards.size();
         int r = (int) (Math.random() * cards.size());
         for (int i = 0; i < cards.size(); i++) {
             //swap
-            int newPlace = r;
+            Card temp = cards.get(i);
             cards.set(i, cards.get(r));
-            cards.set(newPlace, cards.get(i));
-
+            cards.set(r, temp);
         }
-        //finish this thing
     }
-    // */
 }
