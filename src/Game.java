@@ -2,15 +2,21 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class Game {
     private Player player;
-    private Deck deck;
+    private Player dealer;
+    private Deck hand;
+    private Card card;
+    String[] rank = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+    String[] suit = {"clubs", "heart", "spades", "diamonds"};
+    int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11};
+
     public Game() {
         Scanner user = new Scanner(System.in);
         System.out.println("Name: ");
         String name = user.nextLine();
         player = new Player(name);
-        deck = new Deck(
-                new String[]{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
-        //deal user their hand
+        dealer = new Player("dealer");
+        hand = new Deck(rank, suit, values);
+        hand.shuffle();
     }
 
     public void printInstructions() {
@@ -20,37 +26,41 @@ public class Game {
     }
 
     public boolean playGame() {
+        boolean firstPass = true;
+        //boolean isHolding = false;
         printInstructions();
-        System.out.println("Do you want another card? (y/n): ");
+        System.out.println("Draw your first cards? (y/n): ");
         Scanner word = new Scanner(System.in);
         if (word.nextLine().equals("y")) {
             System.out.println();
             while(true) {
                 //check if player is holding
-                if (you.getIsHolding() == false) {
+                if (!player.getIsHolding()) {
                     if (firstPass == true) {
                         firstPass = false;
-                        playerRolls(myDie, you);
+                        //(auto gets two cards) needs to be card class (don't know how to access this?)
+                        card = new Card(Deck.rank)
+                        System.out.println(card.toString());
                     }
                     else {
-                        System.out.println("do you want to roll again" +
-                                "(y or n): ");
+                        System.out.println("do you want to draw again?");
                         //if player wants to continue, if not the player holds
                         if ((word.nextLine()).equals("y")) {
-                            //player rolls
+                            //player draws
                             System.out.print("\n");
+                            //draws another card
                             playerRolls(myDie, you);
                         }
                         else {
-                            you.setHold();
+                            player.setHold();
                         }
                     }
-                    if () {
+                    if (player.getIsHolding()) {
                         break;
                     }
                 }
                 //check to see if dealer should still roll
-                if (dealer.getIsHolding() == false)
+                if (!dealer.getIsHolding())
                 {
                     //dealer rolls
                     gameRolls(myDie, dealer);

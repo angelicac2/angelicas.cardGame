@@ -5,6 +5,7 @@ public class Player {
     private ArrayList<Card> hand = new ArrayList<Card>();
     private ArrayList<Card> card = new ArrayList<Card>();
     private int points;
+    private boolean holding;
 
     public Player(String name) {
         points = 0;
@@ -36,6 +37,14 @@ public class Player {
 
     public void addCard(Card newCard) {
         hand.add(newCard);
+    }
+
+    public void setHold() {
+        holding = true;
+    }
+
+    public boolean getIsHolding() {
+        return holding;
     }
 
     public String toString() {
