@@ -9,11 +9,12 @@ public class Deck {
         for (int count = 0; count < suit.length; count++) {
             for (int i = 0; i < rank.length; i++) {
                 //fix this
-                Card cards = new Card(rank[i], suit[count], pointValue[i]);
+                cards.add(new Card(rank[i], suit[count], pointValue[i]));
             }
         }
         cardsLeft = cards.size();
         //shuffle cards here
+        shuffle();
     }
     public boolean isEmpty() {
         if (cardsLeft == 0) {
@@ -33,8 +34,7 @@ public class Deck {
             return null;
         }
         else {
-            cardsLeft--;
-            return cards.get(cardsLeft);
+            return cards.get(cardsLeft--);
         }
     }
 

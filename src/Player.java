@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class Player {
     private String name;
     private ArrayList<Card> hand = new ArrayList<Card>();
-    private ArrayList<Card> card = new ArrayList<Card>();
     private int points;
     private boolean holding;
 
@@ -24,7 +23,11 @@ public class Player {
     }
 
     public int getPoints() {
-        return points;
+        int handPoints = 0;
+        for (int i = 0; i < hand.size(); i++) {
+            handPoints+= (hand.get(i).getValue());
+        }
+        return handPoints;
     }
 
     public void setPoints(int points) {

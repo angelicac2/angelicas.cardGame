@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Game {
     private Player player;
     private Player dealer;
-    private Deck hand;
+    private Deck deck;
     private Card card;
     String[] rank = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     String[] suit = {"clubs", "heart", "spades", "diamonds"};
@@ -15,14 +15,37 @@ public class Game {
         String name = user.nextLine();
         player = new Player(name);
         dealer = new Player("dealer");
-        hand = new Deck(rank, suit, values);
-        hand.shuffle();
+        deck = new Deck(rank, suit, values);
+        playGame();
     }
 
     public void printInstructions() {
         System.out.println("Welcome to Blackjack. The game is simple, " + "\n" +
             "try to get as close to 21 as possible without going over. " + "\n" +
                 "You will compete against the dealer. Good luck!");
+    }
+
+    public int checkWin() {
+        //dealer wins
+        if (player.getPoints() > 21 || player.getPoints() < dealer.getPoints()) {
+            return 3;
+        }
+        //player wins
+        else if (dealer.getPoints() > 21 || player.getPoints() > dealer.getPoints()) {
+            return 1;
+        }
+        //tie game
+        else if (dealer.getPoints() == player.getPoints()) {
+            return 2;
+        }
+        return 0;
+    }
+
+    public boolean shouldDealerHold() {
+        if (dealer.getPoints() > 16) {
+            return true;
+        }
+        return false;
     }
 
     public boolean playGame() {
@@ -39,22 +62,24 @@ public class Game {
                     if (firstPass == true) {
                         firstPass = false;
                         //(auto gets two cards) needs to be card class (don't know how to access this?)
-                        card = new Card(Deck.rank)
-                        System.out.println(card.toString());
+                        player.getHand().add(deck.deal());
+                        player.getHand().add(deck.deal());
+                        dealer.getHand().add(deck.deal());
+                        dealer.getHand().add(deck.deal());
                     }
                     else {
                         System.out.println("do you want to draw again?");
                         //if player wants to continue, if not the player holds
                         if ((word.nextLine()).equals("y")) {
-                            //player draws
                             System.out.print("\n");
                             //draws another card
-                            playerRolls(myDie, you);
+                            player.getHand().add(deck.deal());
                         }
                         else {
                             player.setHold();
                         }
                     }
+                    //don't ask the player for any more
                     if (player.getIsHolding()) {
                         break;
                     }
@@ -63,23 +88,26 @@ public class Game {
                 if (!dealer.getIsHolding())
                 {
                     //dealer rolls
-                    gameRolls(myDie, dealer);
-                    if (dealer.isBusted() == true) {
-                        System.out.print("\n");
-                        System.out.println("dealer busted");
-                        break;
+                    dealer.getHand().add(deck.deal());
+                    //if the dealer's score is above 17, dealer doesn't roll; end game!
+                    if (shouldDealerHold() == true) {
+                        int winCondition = checkWin();
+                        if (winCondition == 1) {
+                            System.out.println("dealer wins!");
+                            return true;
+                        }
+                        else if (winCondition == 2) {
+                            System.out.println("tie game");
+                            return true;
+                        }
+                        else if (winCondition == 3) {
+                            System.out.println("player wins!!!");
+                            return true;
+                        }
                     }
-                    //if the dealer's score is above 16, dealer doesn't roll
-                    dealer.shouldDealerHold();
-                }
-                //ending of game - check to see score of both player and dealer
-                if (finalMessage(you.getIsHolding(), dealer.getIsHolding(), you.getScore(), dealer.getScore()) == true)
-                {
-                    break;
                 }
             }
         }
+        return true;
     }
-    }
-    */
 }
