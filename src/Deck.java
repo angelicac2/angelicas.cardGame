@@ -34,15 +34,16 @@ public class Deck {
             return null;
         }
         else {
-            return cards.get(cardsLeft--);
+            return cards.get(--cardsLeft);
         }
     }
 
     public void shuffle() {
         cardsLeft = cards.size();
-        int r = (int) (Math.random() * cards.size());
         for (int i = 0; i < cards.size(); i++) {
-            //swap
+            //generates random value
+            int r = (int) (Math.random() * (i + 1));
+            // Swap cards at i and r
             Card temp = cards.get(i);
             cards.set(i, cards.get(r));
             cards.set(r, temp);
