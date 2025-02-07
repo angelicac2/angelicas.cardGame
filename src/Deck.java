@@ -1,15 +1,18 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.lang.Math;
+import java.awt.*;
 public class Deck {
     private int cardsLeft;
     private ArrayList<Card> cards;
 
     public Deck(String[] rank, String[] suit, int[] pointValue) {
         cards = new ArrayList<Card>();
+        int cardIndex = 1;
         for (int count = 0; count < suit.length; count++) {
             for (int i = 0; i < rank.length; i++) {
-                //fix this
-                cards.add(new Card(rank[i], suit[count], pointValue[i]));
+                cards.add(new Card(rank[i], suit[count], pointValue[i], new ImageIcon(cardIndex + ("Resources/O.png").getImage()));
+                cardIndex++;
             }
         }
         cardsLeft = cards.size();

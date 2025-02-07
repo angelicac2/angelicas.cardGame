@@ -1,9 +1,10 @@
+import java.awt.*;
 public class Card {
     private String rank;
     private String suit;
     private int value;
 
-    public Card(String rank, String suit, int value) {
+    public Card(String rank, String suit, int value, Image CardImage) {
         this.rank = rank;
         this.suit = suit;
         this.value = value;

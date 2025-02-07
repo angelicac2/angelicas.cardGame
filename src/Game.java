@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 public class Game {
+    private GameView window;
     private Player player;
     private Player dealer;
     private Deck deck;
@@ -11,6 +12,7 @@ public class Game {
 
     //constructor for game called in main
     public Game() {
+        window = new GameView(this);
         Scanner user = new Scanner(System.in);
         System.out.println("Name: ");
         String name = user.nextLine();
@@ -25,6 +27,7 @@ public class Game {
             "try to get as close to 21 as possible without going over. " + "\n" +
                 "You will compete against the dealer. Good luck!");
     }
+
 
     public int checkPoints() {
         //player busts && dealer is higher than player and both holding
