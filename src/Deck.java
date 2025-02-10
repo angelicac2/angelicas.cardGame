@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.lang.Math;
 import java.awt.*;
+
+
 public class Deck {
     private int cardsLeft;
     private ArrayList<Card> cards;
@@ -11,7 +13,8 @@ public class Deck {
         int cardIndex = 1;
         for (int count = 0; count < suit.length; count++) {
             for (int i = 0; i < rank.length; i++) {
-                cards.add(new Card(rank[i], suit[count], pointValue[i], new ImageIcon(cardIndex + ("Resources/O.png").getImage()));
+                //intialize 52 cards
+                cards.add(new Card(rank[i], suit[count], pointValue[i], new ImageIcon(cardIndex + ("Resources/" + cardIndex + ".png")).getImage()));
                 cardIndex++;
             }
         }

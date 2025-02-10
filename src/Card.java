@@ -3,8 +3,9 @@ public class Card {
     private String rank;
     private String suit;
     private int value;
+    private Image cardImage;
 
-    public Card(String rank, String suit, int value, Image CardImage) {
+    public Card(String rank, String suit, int value, Image cardImage) {
         this.rank = rank;
         this.suit = suit;
         this.value = value;
