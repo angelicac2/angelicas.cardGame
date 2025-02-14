@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferStrategy;
+import java.util.Scanner;
 
 public class GameView extends JFrame {
     private final int WINDOW_WIDTH = 1000;
@@ -23,6 +23,14 @@ public class GameView extends JFrame {
     }
 
     public void paint(Graphics g) {
-        g.drawImage(titlePage, 0, 0, this);
+        int state = Game.getState();
+        switch (state) {
+            case 0:
+                g.drawImage(titlePage, 0, 0, this);
+            case 1:
+                g.drawImage(instructions, 0, 0, this);
+            case 2:
+                g.drawImage(scorePage, 0, 0, this);
+        }
     }
 }

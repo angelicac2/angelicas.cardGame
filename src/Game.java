@@ -1,11 +1,16 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 public class Game {
+    private Scanner frontScanner = new Scanner(System.in);
     private GameView window;
     private Player player;
     private Player dealer;
     private Deck deck;
     private Card card;
+    public static final int WELCOME = 0;
+    public static final int INSTRUCTIONS = 1;
+    public static final int PLAYING = 2;
+    private static int state;
     String[] rank = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     String[] suit = {"clubs", "heart", "spades", "diamonds"};
     int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11};
@@ -22,12 +27,19 @@ public class Game {
         playGame();
     }
 
+    public static int getState() {
+        return state;
+    }
+
     public void printInstructions() {
+        if ((frontScanner.nextLine().equals(""))) {
+            state = INSTRUCTIONS;
+        }
+        //state = INSTRUCTIONS;
         System.out.println("Welcome to Blackjack. The game is simple, " + "\n" +
             "try to get as close to 21 as possible without going over. " + "\n" +
                 "You will compete against the dealer. Good luck!");
     }
-
 
     public int checkPoints() {
         //player busts && dealer is higher than player and both holding
@@ -84,7 +96,11 @@ public class Game {
         return false;
     }
 
+
     public boolean playGame() {
+        if ((frontScanner.nextLine().equals(""))) {
+            state = PLAYING;
+        }
         //first pass, immediately draw two cards
         boolean firstPass = true;
         boolean answer = true;
@@ -181,4 +197,5 @@ public class Game {
         }
         return true;
     }
+
 }
