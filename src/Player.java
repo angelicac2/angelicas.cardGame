@@ -25,7 +25,7 @@ public class Player {
     public int getPoints() {
         int handPoints = 0;
         for (int i = 0; i < hand.size(); i++) {
-            handPoints+= (hand.get(i).getValue());
+            handPoints += (hand.get(i).getValue());
         }
         return handPoints;
     }

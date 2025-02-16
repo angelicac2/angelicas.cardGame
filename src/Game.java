@@ -10,20 +10,21 @@ public class Game {
     public static final int WELCOME = 0;
     public static final int INSTRUCTIONS = 1;
     public static final int PLAYING = 2;
-    private static int state;
+    private static int state = 0;
     String[] rank = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
-    String[] suit = {"clubs", "heart", "spades", "diamonds"};
+    String[] suit = {"spades", "hearts", "diamonds", "clubs"};
     int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11};
 
     //constructor for game called in main
     public Game() {
         window = new GameView(this);
         Scanner user = new Scanner(System.in);
-        System.out.println("Name: ");
-        String name = user.nextLine();
-        player = new Player(name);
+        //System.out.println("Name: ");
+        //String name = user.nextLine();
+        player = new Player("player");
         dealer = new Player("dealer");
         deck = new Deck(rank, suit, values);
+        window.repaint();
         playGame();
     }
 
@@ -31,14 +32,16 @@ public class Game {
         return state;
     }
 
+    public void titlePage() {
+        System.out.println("Blackjack by Angelica Chou (press enter to continue)");
+    }
+
     public void printInstructions() {
-        if ((frontScanner.nextLine().equals(""))) {
-            state = INSTRUCTIONS;
-        }
-        //state = INSTRUCTIONS;
+        state = INSTRUCTIONS;
         System.out.println("Welcome to Blackjack. The game is simple, " + "\n" +
             "try to get as close to 21 as possible without going over. " + "\n" +
-                "You will compete against the dealer. Good luck!");
+                "You will compete against the dealer. Good luck! (press enter to continue)");
+        window.repaint();
     }
 
     public int checkPoints() {
@@ -70,6 +73,22 @@ public class Game {
         return 0;
     }
 
+    public int getDealerPoints() {
+        return dealer.getPoints();
+    }
+
+    public int getPlayerPoints() {
+        return player.getPoints();
+    }
+
+    public ArrayList<Card> getDealerCards() {
+        return dealer.getHand();
+    }
+
+    public ArrayList<Card> getPlayerCards() {
+        return player.getHand();
+    }
+
     //final messages, more conise
     public boolean checkWin() {
         int winCondition = checkPoints();
@@ -90,25 +109,27 @@ public class Game {
 
     //dealer holds when points reach greater than 17
     public boolean shouldDealerHold() {
-        if (dealer.getPoints() > 17) {
+        if (dealer.getPoints() >= 17) {
             return true;
         }
         return false;
     }
 
-
     public boolean playGame() {
-        if ((frontScanner.nextLine().equals(""))) {
-            state = PLAYING;
-        }
+        titlePage();
+        while (!(frontScanner.nextLine().equals(""))) {}
+        printInstructions();
+        while (!(frontScanner.nextLine().equals(""))) {}
+        state = PLAYING;
+        window.repaint();
         //first pass, immediately draw two cards
         boolean firstPass = true;
         boolean answer = true;
         //print instructions
-        printInstructions();
         System.out.println("Draw your first cards? (y/n): ");
         Scanner word = new Scanner(System.in);
         if (word.nextLine().equals("y")) {
+            window.repaint();
             System.out.println();
             while(true) {
                 //check if player is holding
@@ -128,6 +149,7 @@ public class Game {
                             System.out.println("dealer card #" + i + ": " + dealer.getHand().get(i - 1).toString());
                         }
                         System.out.println("dealer's points: " + dealer.getPoints());
+                        window.repaint();
                     }
                     //continuing the game beyond first round
                     if (firstPass == false) {
@@ -152,6 +174,7 @@ public class Game {
                                 player.setHold();
                                 answer = false;
                             }
+                            window.repaint();
                         }
                         //break out of larger loop
                         if (player.getPoints() > 21) {
@@ -159,6 +182,7 @@ public class Game {
                                 break;
                             }
                         }
+                        window.repaint();
                     }
                     //don't ask the player for anymore cards
                     if (player.getIsHolding()) {
@@ -169,6 +193,7 @@ public class Game {
                             }
                         }
                     }
+                    window.repaint();
                 }
                 //check to see if dealer should still roll if dealer isn't holding
                 if (!dealer.getIsHolding() && firstPass == false)
@@ -193,6 +218,7 @@ public class Game {
                         }
                     }
                 }
+                window.repaint();
             }
         }
         return true;

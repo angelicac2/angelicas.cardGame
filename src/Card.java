@@ -2,13 +2,18 @@ import java.awt.*;
 public class Card {
     private String rank;
     private String suit;
-    private int value;
+    private final int value;
     private Image cardImage;
 
     public Card(String rank, String suit, int value, Image cardImage) {
         this.rank = rank;
         this.suit = suit;
         this.value = value;
+        this.cardImage = cardImage;
+    }
+
+    public Image getCardImage() {
+        return cardImage;
     }
 
     public String rank() {
@@ -29,10 +34,6 @@ public class Card {
 
     public int getValue() {
         return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
     }
 
     public String toString() {

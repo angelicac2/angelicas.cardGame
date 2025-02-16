@@ -11,10 +11,10 @@ public class Deck {
     public Deck(String[] rank, String[] suit, int[] pointValue) {
         cards = new ArrayList<Card>();
         int cardIndex = 1;
-        for (int count = 0; count < suit.length; count++) {
-            for (int i = 0; i < rank.length; i++) {
-                //intialize 52 cards
-                cards.add(new Card(rank[i], suit[count], pointValue[i], new ImageIcon(cardIndex + ("Resources/" + cardIndex + ".png")).getImage()));
+        for (int i = 0; i < rank.length; i++) {
+            for (int count = 0; count < suit.length; count++) {
+                // intialize 52 cards
+                cards.add(new Card(rank[i], suit[count], pointValue[i], new ImageIcon("resources/" + cardIndex + ".png").getImage()));
                 cardIndex++;
             }
         }

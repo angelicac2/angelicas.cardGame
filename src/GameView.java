@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GameView extends JFrame {
@@ -24,13 +25,34 @@ public class GameView extends JFrame {
 
     public void paint(Graphics g) {
         int state = Game.getState();
-        switch (state) {
-            case 0:
-                g.drawImage(titlePage, 0, 0, this);
-            case 1:
-                g.drawImage(instructions, 0, 0, this);
-            case 2:
-                g.drawImage(scorePage, 0, 0, this);
+        if (state == 0) {
+            g.drawImage(titlePage, 0, 0, this);
+        }
+        else if (state == 1) {
+            g.drawImage(instructions, 0, 0, this);
+        }
+        else if (state == 2) {
+            g.drawImage(scorePage, 0, 0, this);
+            drawScorePage(g);
+        }
+    }
+
+    public void drawScorePage(Graphics g) {
+        g.setColor(Color.white);
+        g.fillRect(498, 0, 4, 800);
+        // Print everyones points
+        g.setFont(new Font("Algerian", Font.BOLD, 100));
+        g.drawString(String.valueOf(backend.getPlayerPoints()), 300, 715);
+        g.drawString(String.valueOf(backend.getDealerPoints()), 800, 715);
+
+        ArrayList<Card> playerCards = backend.getPlayerCards();
+        ArrayList<Card> dealerCards = backend.getDealerCards();
+
+        for (int i = 0; i < playerCards.size(); i++) {
+            g.drawImage(playerCards.get(i).getCardImage(), 50 + i * 100, 50 + i * 100, 100, 150, this);
+        }
+        for (int i = 0; i < dealerCards.size(); i++) {
+            g.drawImage(dealerCards.get(i).getCardImage(), 550 + i * 100, 50 + i * 100, 100, 150, this);
         }
     }
 }
