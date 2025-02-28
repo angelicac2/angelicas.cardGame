@@ -77,6 +77,7 @@ public class GameView extends JFrame {
         g.setColor(Color.white);
         // Take in win status from backend, print the right status in the front end
         switch (backend.checkPoints()) {
+            // Each case connects to the status of the backend through checkPoints function
             case 1:
                 g.drawString("dealer busted.", 120, 400);
                 break;
