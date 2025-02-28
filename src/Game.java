@@ -7,13 +7,15 @@ public class Game {
     private Player dealer;
     private Deck deck;
     private Card card;
+    private boolean printedWin;
     public static final int WELCOME = 0;
     public static final int INSTRUCTIONS = 1;
     public static final int PLAYING = 2;
     private static int state = 0;
+    private int ifWin = 0;
     String[] rank = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     String[] suit = {"spades", "hearts", "diamonds", "clubs"};
-    int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11};
+    int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10};
 
     //constructor for game called in main
     public Game() {
@@ -24,6 +26,7 @@ public class Game {
         player = new Player("player");
         dealer = new Player("dealer");
         deck = new Deck(rank, suit, values);
+        printedWin = false;
         window.repaint();
         playGame();
     }
@@ -47,29 +50,45 @@ public class Game {
     public int checkPoints() {
         //player busts && dealer is higher than player and both holding
         if (player.getPoints() > 21) {
-            System.out.println("player busted.");
+            if (printedWin == false) {
+                System.out.println("player busted.");
+            }
+            printedWin = true;
             return 3;
         }
         //both are holding, dealer is greater than player
         else if (player.getIsHolding() == true && dealer.getIsHolding() == true && player.getPoints() < dealer.getPoints()) {
-            System.out.println("Player has " + player.getPoints() + " and dealer has " + dealer.getPoints());
-            return 3;
+            if (printedWin == false) {
+                System.out.println("Player has " + player.getPoints() + " and dealer has " + dealer.getPoints());
+            }
+            printedWin = true;
+            return 4;
         }
         //player wins bc dealer busts
         else if (dealer.getPoints() > 21) {
-            System.out.println("dealer busted.");
+            if (printedWin == false) {
+                System.out.println("dealer busted.");
+            }
+            printedWin = true;
             return 1;
         }
         //both are holding, player wins with more points
         else if (player.getIsHolding() == true && dealer.getIsHolding() == true && player.getPoints() > dealer.getPoints()) {
-            System.out.println("Player has " + player.getPoints() + " and dealer has " + dealer.getPoints());
-            return 1;
+            if (printedWin == false) {
+                System.out.println("Player has " + player.getPoints() + " and dealer has " + dealer.getPoints());
+            }
+            printedWin = true;
+            return 5;
         }
         //tie game
         else if (player.getIsHolding() == true && dealer.getIsHolding() == true && dealer.getPoints() == player.getPoints()) {
-            System.out.println("Player has " + player.getPoints() + " and dealer has " + dealer.getPoints());
+            if (printedWin == false) {
+                System.out.println("Player has " + player.getPoints() + " and dealer has " + dealer.getPoints());
+            }
+            printedWin = true;
             return 2;
         }
+        window.repaint();
         return 0;
     }
 
@@ -92,7 +111,7 @@ public class Game {
     //final messages, more conise
     public boolean checkWin() {
         int winCondition = checkPoints();
-        if (winCondition == 1) {
+        if (winCondition == 1 || winCondition == 5) {
             System.out.println("player wins!");
             return true;
         }
@@ -100,7 +119,7 @@ public class Game {
             System.out.println("tie game");
             return true;
         }
-        else if (winCondition == 3) {
+        else if (winCondition == 3 || winCondition == 4) {
             System.out.println("dealer wins!!!");
             return true;
         }
@@ -109,10 +128,14 @@ public class Game {
 
     //dealer holds when points reach greater than 17
     public boolean shouldDealerHold() {
-        if (dealer.getPoints() >= 17) {
+        if (dealer.getPoints() > 17) {
             return true;
         }
         return false;
+    }
+
+    public int getIfWin() {
+        return this.ifWin;
     }
 
     public boolean playGame() {
@@ -125,10 +148,11 @@ public class Game {
         //first pass, immediately draw two cards
         boolean firstPass = true;
         boolean answer = true;
-        //print instructions
-        System.out.println("Draw your first cards? (y/n): ");
         Scanner word = new Scanner(System.in);
-        if (word.nextLine().equals("y")) {
+        //print instructions
+        do {
+            System.out.println("Draw your first cards? (y/n): ");
+        } while (!word.nextLine().equals("y"));
             window.repaint();
             System.out.println();
             while(true) {
@@ -179,6 +203,8 @@ public class Game {
                         //break out of larger loop
                         if (player.getPoints() > 21) {
                             if (checkWin() == true) {
+                                ifWin = 1;
+                                window.repaint();
                                 break;
                             }
                         }
@@ -189,6 +215,8 @@ public class Game {
                         //if the dealer is holding, check win
                         if (dealer.getIsHolding() == true) {
                             if (checkWin() == true) {
+                                ifWin = 1;
+                                window.repaint();
                                 break;
                             }
                         }
@@ -206,6 +234,8 @@ public class Game {
                     //dealer busts if over 21
                     if (dealer.getPoints() > 21) {
                         if (checkWin() == true) {
+                            ifWin = 1;
+                            window.repaint();
                             break;
                         }
                     }
@@ -214,13 +244,14 @@ public class Game {
                         System.out.println("the dealer is holding.");
                         dealer.setHold();
                         if (checkWin() == true) {
+                            ifWin = 1;
+                            window.repaint();
                             break;
                         }
                     }
                 }
                 window.repaint();
             }
-        }
         return true;
     }
 
